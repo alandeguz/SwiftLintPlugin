@@ -1,12 +1,7 @@
 //
 //  SwiftLintBuildToolPlugin.swift
-//  Plugins/SwiftLint
 //
 //  Created by Alan DeGuzman on 9/23/22.
-//
-//  This local plugin can eventually be replaced by an official remote plugin.
-//  https://github.com/realm/SwiftLint/issues/3840#issuecomment-1085699163
-//  https://github.com/realm/SwiftLint/pull/4176
 //
 
 import PackagePlugin
