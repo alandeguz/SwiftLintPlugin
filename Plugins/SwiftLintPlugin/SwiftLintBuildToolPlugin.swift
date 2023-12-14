@@ -5,6 +5,7 @@
 //
 
 import PackagePlugin
+import Foundation
 
 @main
 
@@ -52,16 +53,27 @@ private extension Command {
                         config: Path,
                         lintDirectory: Path,
                         outputFilesDirectory: Path) throws -> Command {
-    .prebuildCommand(
-      displayName: "Running SwiftLint",
-      executable: exec,
-      arguments: [
+      
+      var args = [
         "lint", lintDirectory.string,
         "--config", config.string
-      ],
-      environment: [:],
-      outputFilesDirectory: outputFilesDirectory
-    )
+      ]
+      
+      if ProcessInfo.processInfo.environment["CI_XCODE_CLOUD"] == "TRUE" {
+          args.append("--no-cache")
+      } else {
+          args.append("--cache-path")
+          args.append("\(outputFilesDirectory)")
+      }
+      
+      return
+          .prebuildCommand(
+            displayName: "Running SwiftLint",
+            executable: exec,
+            arguments: args,
+            environment: [:],
+            outputFilesDirectory: outputFilesDirectory
+          )
   }
 
 }
